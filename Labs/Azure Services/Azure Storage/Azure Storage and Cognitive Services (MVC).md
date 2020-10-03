@@ -1,11 +1,11 @@
 <a name="HOLTitle"></a>
 # Azure Storage and Cognitive Services #
 
-Microsoft Azure Storage is a set of services that allows you to store large volumes of data in a cost-effective manner and in a way that makes the data readily and reliably available to services and applications that consume it. Data committed to Azure Storage can be stored in blobs, tables, queues, or files. [Azure blobs](http://azure.microsoft.com/en-us/services/storage/blobs/) are ideal for storing images, videos, and other types of data, and are frequently used to provide input to and capture output from other Azure services such as [Azure Stream Analytics](http://azure.microsoft.com/en-us/services/stream-analytics/). [Azure tables](http://azure.microsoft.com/en-us/services/storage/tables/) provide NoSQL storage for semi-structured data. [Azure queues](http://azure.microsoft.com/en-us/services/storage/queues/) support queued message transfers between applications (or parts of applications) and can be used to make applications more scalable and robust by loosely coupling them together. Finally, [Azure Files](http://azure.microsoft.com/en-us/services/storage/files) use the Server Message Block (SMB) protocol to share files through the cloud and access storage as network drives.
+Microsoft Azure Storage is a set of services that allows you to store large volumes of data in a cost-effective manner and in a way that makes the data readily and reliably available to services and applications that consume it. Data committed to Azure Storage can be stored in blobs, tables, queues, or files. [Azure blobs](http://azure.microsoft.com/services/storage/blobs/?WT.mc_id=academiccontent-github-cxa) are ideal for storing images, videos, and other types of data, and are frequently used to provide input to and capture output from other Azure services such as [Azure Stream Analytics](http://azure.microsoft.com/services/stream-analytics/?WT.mc_id=academiccontent-github-cxa). [Azure tables](http://azure.microsoft.com/services/storage/tables/?WT.mc_id=academiccontent-github-cxa) provide NoSQL storage for semi-structured data. [Azure queues](http://azure.microsoft.com/services/storage/queues/?WT.mc_id=academiccontent-github-cxa) support queued message transfers between applications (or parts of applications) and can be used to make applications more scalable and robust by loosely coupling them together. Finally, [Azure Files](http://azure.microsoft.com/services/storage/files?WT.mc_id=academiccontent-github-cxa) use the Server Message Block (SMB) protocol to share files through the cloud and access storage as network drives.
 
-Data stored in Microsoft Azure Storage can be accessed over HTTP or HTTPS using straightforward REST APIs, or it can be accessed using rich client libraries available for many popular languages and platforms, including .NET, Java, Android, Node.js, PHP, Ruby, and Python. The [Azure Portal](https://portal.azure.com) includes features for working with Azure Storage, but richer functionality is available from third-party tools, many of which are free and some of which work cross-platform.
+Data stored in Microsoft Azure Storage can be accessed over HTTP or HTTPS using straightforward REST APIs, or it can be accessed using rich client libraries available for many popular languages and platforms, including .NET, Java, Android, Node.js, PHP, Ruby, and Python. The [Azure Portal](https://portal.azure.com?WT.mc_id=academiccontent-github-cxa) includes features for working with Azure Storage, but richer functionality is available from third-party tools, many of which are free and some of which work cross-platform.
 
-In this lab, you will use Visual Studio to write an MVC Web app that accepts images uploaded by users and stores the images in Azure blob storage. You will learn how to read and write blobs in C#, and how to use blob metadata to attach additional information to the blobs you create. You will also get first-hand experience using [Microsoft Cognitive Services](https://www.microsoft.com/cognitive-services/), a set of intelligence APIs for building smart applications. Specifically, you'll submit each image uploaded by the user to Cognitive Services' [Computer Vision API](https://www.microsoft.com/cognitive-services/en-us/computer-vision-api) to generate a caption for the image as well as search metadata describing the contents of the image. And you will discover how easy it is to deploy apps to the cloud using Visual Studio.
+In this lab, you will use Visual Studio to write an MVC Web app that accepts images uploaded by users and stores the images in Azure blob storage. You will learn how to read and write blobs in C#, and how to use blob metadata to attach additional information to the blobs you create. You will also get first-hand experience using [Microsoft Cognitive Services](https://www.microsoft.com/cognitive-services/?WT.mc_id=academiccontent-github-cxa), a set of intelligence APIs for building smart applications. Specifically, you'll submit each image uploaded by the user to Cognitive Services' [Computer Vision API](https://www.microsoft.com/cognitive-services/computer-vision-api?WT.mc_id=academiccontent-github-cxa) to generate a caption for the image as well as search metadata describing the contents of the image. And you will discover how easy it is to deploy apps to the cloud using Visual Studio.
 
 <a name="Objectives"></a>
 ### Objectives ###
@@ -23,8 +23,8 @@ In this hands-on lab, you will learn how to:
 
 The following are required to complete this hands-on lab:
 
-- An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](http://aka.ms/WATK-FreeTrial).
-- [Visual Studio 2017 Community edition](https://www.visualstudio.com/en-us/products/visual-studio-community-vs.aspx) or higher with the "ASP.NET and web development" and "Azure development" workloads installed
+- An active Microsoft Azure subscription. If you don't have one, [sign up for a free trial](https://aka.ms/WATK-FreeTrial).
+- [Visual Studio 2017 Community edition](https://www.visualstudio.com/products/visual-studio-community-vs.aspx?WT.mc_id=academiccontent-github-cxa) or higher with the "ASP.NET and web development" and "Azure development" workloads installed
 - [Microsoft Azure Storage Explorer](http://storageexplorer.com/)
 
 <a name="Resources"></a>
@@ -57,9 +57,9 @@ Estimated time to complete this lab: **60** minutes.
 <a name="Exercise1"></a>
 ## Exercise 1: Create a storage account
 
-The [Azure Portal](https://portal.azure.com) allows you to perform basic storage operations such as creating storage accounts, creating containers, uploading and downloading blobs, and managing access keys. In this exercise, you will use the portal to create a storage account. Then you'll create a pair of containers: one to store images uploaded by the user, and another to store image thumbnails generated from the uploaded images.
+The [Azure Portal](https://portal.azure.com?WT.mc_id=academiccontent-github-cxa) allows you to perform basic storage operations such as creating storage accounts, creating containers, uploading and downloading blobs, and managing access keys. In this exercise, you will use the portal to create a storage account. Then you'll create a pair of containers: one to store images uploaded by the user, and another to store image thumbnails generated from the uploaded images.
 
-1. Open the [Azure Portal](https://portal.azure.com) in your browser. If you are asked to log in, do so using your Microsoft account.
+1. Open the [Azure Portal](https://portal.azure.com?WT.mc_id=academiccontent-github-cxa) in your browser. If you are asked to log in, do so using your Microsoft account.
  
 1. To create a storage account, click **+ Create a resource** in the ribbon on the left. Then click **Storage**, followed by **Storage account**.
 
@@ -67,12 +67,10 @@ The [Azure Portal](https://portal.azure.com) allows you to perform basic storage
 
     _Creating a storage account_
 
-1. In the ensuing "Create storage account" blade, enter a name for the new storage account in **Name** field. The name is important, because it forms one part of the URL through which blobs created under this account are accessed.
+1. Enter a unique name for the storage account in **Name** field and make sure a green check mark appears next to it. The name is important, because it forms one part of the URL through which blobs created under this account are accessed. Place the storage account in a new resource group named "IntellipixResources," and select the region nearest you. Finish up by clicking the **Review + create** button at the bottom of the blade to create the new storage account.
 
 	> Storage account names can be 3 to 24 characters in length and can only contain numbers and lowercase letters. In addition, the name you enter must be unique within Azure. If someone else has chosen the same name, you'll be notified that the name isn't available with a red exclamation mark in the **Name** field.
-
-	Once you have a name that Azure will accept, make sure **Resource manager** is selected as the deployment model and **General purpose** is selected as the account type. Then select **Create new** under **Resource group** and enter "IntellipixResources" as the resource-group name. Select the **Location** nearest you, and finish up by clicking the **Create** button at the bottom of the blade to create the new storage account.
-    
+   
 	![Specifying parameters for a new storage account](Images/create-storage-account.png)
 
     _Specifying parameters for a new storage account_
@@ -250,7 +248,7 @@ In this exercise, you will create a new Web app in Visual Studio and add code to
 	}
 	```
 
-	The new ```Index``` method enumerates the blobs in the "photos" container and passes an array of ```BlobInfo``` objects representing those blobs to the view through ASP.NET MVC's ```ViewBag``` property. In a moment, you will modify the view to enumerate these objects and display a collection of photo thumbnails. The classes used to access your storage account and enumerate the blobs — [CloudStorageAccount](https://docs.microsoft.com/dotnet/api/microsoft.windowsazure.storage.cloudstorageaccount?view=azurestorage-8.1.3), [CloudBlobClient](https://docs.microsoft.com/dotnet/api/microsoft.windowsazure.storage.blob.cloudblobclient?view=azurestorage-8.1.3), and [CloudBlobContainer](https://docs.microsoft.com/dotnet/api/microsoft.windowsazure.storage.blob.cloudblobcontainer?view=azurestorage-8.1.3) — come from the WindowsAzure.Storage package you installed from NuGet.
+	The new ```Index``` method enumerates the blobs in the "photos" container and passes an array of ```BlobInfo``` objects representing those blobs to the view through ASP.NET MVC's ```ViewBag``` property. In a moment, you will modify the view to enumerate these objects and display a collection of photo thumbnails. The classes used to access your storage account and enumerate the blobs — [CloudStorageAccount](https://docs.microsoft.com/dotnet/api/microsoft.windowsazure.storage.cloudstorageaccount?WT.mc_id=academiccontent-github-cxa), [CloudBlobClient](https://docs.microsoft.com/dotnet/api/microsoft.windowsazure.storage.blob.cloudblobclient?WT.mc_id=academiccontent-github-cxa), and [CloudBlobContainer](https://docs.microsoft.com/dotnet/api/microsoft.windowsazure.storage.blob.cloudblobcontainer?WT.mc_id=academiccontent-github-cxa) — come from the WindowsAzure.Storage package you installed from NuGet.
 
 1. Add the following method to the ```HomeController``` class in **HomeController.cs**:
 
@@ -434,13 +432,13 @@ Now you have a way to view the images you uploaded. The next step is to do more 
 <a name="Exercise5"></a>
 ## Exercise 5: Use Cognitive Services to generate metadata
 
-Now comes the fun part: using [Microsoft Cognitive Services](https://www.microsoft.com/cognitive-services/) to generate captions and search keywords for the photos you upload. Cognitive Services is a set of intelligence APIs that you can call from your apps. Among the more than 25 APIs it offers are the [Computer Vision API](https://www.microsoft.com/cognitive-services/en-us/computer-vision-api) for distilling actionable information from images, and the [Text Analytics API](https://www.microsoft.com/cognitive-services/en-us/text-analytics-api) for extracting sentiments and other information from text (for example, Twitter feeds). These APIs make it possible to build smart apps that would have been impossible just a few short years ago. And they're available for you to begin using today.
+Now comes the fun part: using [Microsoft Cognitive Services](https://www.microsoft.com/cognitive-services/?WT.mc_id=academiccontent-github-cxa) to generate captions and search keywords for the photos you upload. Cognitive Services is a set of intelligence APIs that you can call from your apps. Among the more than 25 APIs it offers are the [Computer Vision API](https://www.microsoft.com/cognitive-services/computer-vision-api?WT.mc_id=academiccontent-github-cxa) for distilling actionable information from images, and the [Text Analytics API](https://www.microsoft.com/cognitive-services/text-analytics-api?WT.mc_id=academiccontent-github-cxa) for extracting sentiments and other information from text (for example, Twitter feeds). These APIs make it possible to build smart apps that would have been impossible just a few short years ago. And they're available for you to begin using today.
 
 In this exercise, you will use the Computer Vision API to generate a caption for each image that is uploaded, as well as keywords describing the contents of the image. You will store this data in metadata attached to each blob in the "photos" container.
 
 1. Begin by using the Azure Storage Explorer to delete the blobs in the "photos" container and the "thumbnails" container. (Do not delete the containers themselves.) This will allow you to start fresh with a new batch of images to process with the Computer Vision API.
 
-1. In the Azure Portal, click **+ Create a resource**, followed by **AI + Cognitive Services** and **Computer Vision API**.
+1. In the Azure Portal, click **+ Create a resource**, followed by **AI + Machine Learning** and **Computer Vision**.
 
     ![Creating a new Computer Vision API subscription](Images/new-vision-api.png)
 
@@ -477,34 +475,37 @@ In this exercise, you will use the Computer Vision API to generate a caption for
 	<add key="VisionEndpoint" value="VISION_ENDPOINT" />
 	```
 
-1. In Solution Explorer, right-click the project and use the **Manage NuGet Packages...** command to install a package named **Microsoft.ProjectOxford.Vision**. This package contains types for calling the Computer Vision API. As usual, approve any changes and licenses that are presented to you.
+1. If the endpoint URL you just added to **Web.config** doesn't end with "/vision/v1.0", add it. The complete URL should look something like this: https://eastus.api.cognitive.microsoft.com/vision/v1.0.
 
-    ![Installing Microsoft.ProjectOxford.Vision](Images/install-vision-package.png)
+1. In Solution Explorer, right-click the project and use the **Manage NuGet Packages...** command to install a package named **Microsoft.Azure.CognitiveServices.Vision.ComputerVision**. This package contains types for calling the Computer Vision API. As usual, approve any changes and licenses that are presented to you.
 
-    _Installing Microsoft.ProjectOxford.Vision_
+    ![Installing Microsoft.Azure.CognitiveServices.Vision.ComputerVision](Images/install-vision-package.png)
+
+    _Installing Microsoft.Azure.CognitiveServices.Vision.ComputerVision_
 
 1. Open **HomeController.cs** in the project's "Controllers" folder and add the following ```using``` statement at the top of the file:
 
 	```C#
-	using Microsoft.ProjectOxford.Vision;
+	using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
+    using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 	```
 
 1. Add the following statements to the ```Upload``` method, immediately after the block of code that begins with the comment "Generate a thumbnail and save it in the thumbnails container." This code passes the URL of the blob containing the image that was uploaded to the Computer Vision API, and requests that Computer Vision generate a description for the image. In addition to generating a description, the Computer Vision API also generates a list of keywords describing what it sees in the image. Your code stores the computer-generated description and the keywords in the blob's metadata so they can be retrieved later on.
 
 	```C#
     // Submit the image to Azure's Computer Vision API
-	VisionServiceClient vision = new VisionServiceClient(
-	    ConfigurationManager.AppSettings["SubscriptionKey"],
-	    ConfigurationManager.AppSettings["VisionEndpoint"]
-	);
+    ComputerVisionClient vision = new ComputerVisionClient(
+        new ApiKeyServiceClientCredentials(ConfigurationManager.AppSettings["SubscriptionKey"]),
+        new System.Net.Http.DelegatingHandler[] { });
+    vision.Endpoint = ConfigurationManager.AppSettings["VisionEndpoint"];
 
-    VisualFeature[] features = new VisualFeature[] { VisualFeature.Description };
+    VisualFeatureTypes[] features = new VisualFeatureTypes[] { VisualFeatureTypes.Description };
     var result = await vision.AnalyzeImageAsync(photo.Uri.ToString(), features);
 
     // Record the image description and tags in blob metadata
     photo.Metadata.Add("Caption", result.Description.Captions[0].Text);
 
-    for (int i = 0; i < result.Description.Tags.Length; i++)
+    for (int i = 0; i < result.Description.Tags.Count; i++)
     {
         string key = String.Format("Tag{0}", i);
         photo.Metadata.Add(key, result.Description.Tags[i]);
@@ -519,12 +520,12 @@ In this exercise, you will use the Computer Vision API to generate a caption for
     foreach (IListBlobItem item in container.ListBlobs())
     {
         var blob = item as CloudBlockBlob;
-
+    
         if (blob != null)
         {
             blob.FetchAttributes(); // Get blob metadata
             var caption = blob.Metadata.ContainsKey("Caption") ? blob.Metadata["Caption"] : blob.Name;
-
+    
             blobs.Add(new BlobInfo()
             {
                 ImageUri = blob.Uri.ToString(),
@@ -700,7 +701,7 @@ If you make changes to the app and want to push the changes out to the Web, simp
 
 When you're finished using the site, you should delete the resource group containing it. Deleting the resource group deletes all of the resources inside it (including the storage account, the blobs uploaded to it, and the App Service), removes all traces of this lab from your account, and prevents any further charges from being incurred for it. To delete the resource group, simply open the resource-group blade in the portal and click **Delete resource group** at the top of the blade. You will be asked to type the resource group's name to confirm that you want to delete it, because once deleted, a resource group can't be recovered.
 
-There is much more that you could do to develop Intellipix and to leverage Azure even further. For example, you could add support for authenticating users and deleting photos, and rather than force the user to wait for Cognitive Services to process a photo following an upload, you could use [Azure Functions](https://azure.microsoft.com/en-us/services/functions/) to call the Computer Vision API asynchronously each time an image is added to blob storage. You could even use Cognitive Services to detect faces in the photos and analyze the emotions depicted by those faces. With the cloud as your platform, the sky is the limit (pun intended).
+There is much more that you could do to develop Intellipix and to leverage Azure even further. For example, you could add support for authenticating users and deleting photos, and rather than force the user to wait for Cognitive Services to process a photo following an upload, you could use [Azure Functions](https://azure.microsoft.com/services/functions/?WT.mc_id=academiccontent-github-cxa) to call the Computer Vision API asynchronously each time an image is added to blob storage. You could even use Cognitive Services to detect faces in the photos and analyze the emotions depicted by those faces. With the cloud as your platform, the sky is the limit (pun intended).
 
 ----
 

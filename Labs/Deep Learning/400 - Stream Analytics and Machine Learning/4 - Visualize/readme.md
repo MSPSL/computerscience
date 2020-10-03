@@ -24,6 +24,7 @@ The following are required to complete this hands-on lab:
 
 - An active Microsoft work/school or organizational account
 - An active Microsoft Power BI subscription. If you don't have one, [sign up for a free trial](https://app.powerbi.com/signupredirect?pbi_source=web).
+- [Power BI Desktop](https://powerbi.microsoft.com/desktop/?WT.mc_id=academiccontent-github-cxa) (Requires Windows)
 
 If you haven't completed the [previous lab in this series](../3%20-%20Predict), you must do so before starting this lab.
 
@@ -41,43 +42,32 @@ Estimated time to complete this lab: **30** minutes.
 <a name="Exercise1"></a>
 ## Exercise 1: Connect Power BI to Azure SQL ##
 
-In the previous lab, you used the [Custom Vision Service](https://azure.microsoft.com/services/cognitive-services/custom-vision-service/) to train an image-classification model to differentiate between different types of Arctic wildlife, and modified the Azure Function you wrote to output the results to an Azure SQL database. The first step in using Microsoft Power BI to explore and visualize this data is connecting it to Power BI as a data source. In this exercise, you will connect the [Power BI service](https://docs.microsoft.com/en-us/power-bi/service-get-started) to the Azure SQL database.
+In the previous lab, you used the [Custom Vision Service](https://azure.microsoft.com/services/cognitive-services/custom-vision-service/?WT.mc_id=academiccontent-github-cxa) to train an image-classification model to differentiate between different types of Arctic wildlife, and modified the Azure Function you wrote to output the results to an Azure SQL database. The first step in using Microsoft Power BI to explore and visualize this data is connecting it to Power BI as a data source. In this exercise, you will create a report in [Power BI Desktop](https://powerbi.microsoft.com/desktop/?WT.mc_id=academiccontent-github-cxa) and connect to the Azure SQL database.
 
-1. Go to the Power BI service portal at https://app.powerbi.com. If asked to log in, do so with your work/school or organizational account.
+1. If Power BI Desktop isn't already installed on your computer, go to https://powerbi.microsoft.com/desktop/ and install it now.
+
+1. Start Power BI Desktop. If you are asked to sign in, do so using your work/school or organizational account.
 
 	> There are two types of Microsoft accounts: personal Microsoft accounts and work/school accounts, also known as organizational accounts. Power BI accepts the latter but not the former. If you have an Office 365 subscription, it uses your work/school account. You can have a work/school account without having an Office 365 subscription, however. For an explanation of the differences between personal Microsoft accounts and work/school accounts, see [Understanding Microsoft Work And Personal Accounts](http://www.brucebnews.com/2016/06/finding-your-way-through-microsofts-maze-of-work-and-personal-accounts/).
 
-1. Click **Get Data** in the menu bar on the left.
+1. Click **Get Data** in the ribbon at the top of the window. Then select **Azure SQL database** from the list of data sources and click the **Connect** button.
 
-    ![Adding a data source](Images/portal-get-data.png)
+    ![Adding a data source](Images/connect-to-database-1.png)
 
     _Adding a data source_
 
-1. Click the **Get** button in the "Databases" tile.
-
-    ![Connecting to a database](Images/connect-to-database-1.png)
-
-    _Connecting to a database_
-
-1. Click **Azure SQL Data Warehouse**, and then click **Connect**.
-
-    ![Connecting to an Azure SQL Data Warehouse](Images/connect-to-database-2.png)
-
-    _Connecting to an Azure SQL Data Warehouse_
-
-1. Enter the server's host name (the server name plus ".database.windows.net" since it's an Azure SQL database server) and the database name that you specified in the previous lab. Enable **Enable Advanced Options**, and then type the query below into the **Custom Filters** box to select the 20 most recently added rows in the "PolarBears" table. This is the query that the report will use to pull information from the database. When you're done, click **Next**.
+1. Enter the server's host name (the server name you specified in the previous lab plus ".database.windows.net" since it's an Azure SQL database server) and the database name. Select **DirectQuery**, and click **Advanced options**. Then type the query below into the "SQL statement" box to select the 20 most recently added rows in the "PolarBears" table. This is the query that the report will use to pull information from the database. When you're done, click **OK**. Then click the **Load** button in the ensuing dialog.
 
 	```sql
 	SELECT TOP 20 Id, CameraId, Latitude, Longitude, Url, Timestamp, FORMAT(Timestamp,'MM/dd/yyyy h:mm:ss tt') AS TimestampLabel, IsPolarBear FROM dbo.PolarBears ORDER BY Timestamp DESC
 	```
+    ![Connecting to a database](Images/connect-to-database-2.png)
 
-    ![Specifying a database and query](Images/connect-to-database-3.png)
+    _Connecting to a database_
 
-    _Specifying a database and query_
+1. If prompted, enter the user name and password you specified when you created the database server, and select the database from the drop-down list labeled "Select which level." Then click **Connect**.
 
-1. In the subsequent dialog, enter the user name and password you specified when you created the database server. Then click **Sign in**.
-
-    ![Entering admin credentials](Images/connect-to-database-4.png)
+    ![Entering admin credentials](Images/connect-to-database-3.png)
 
     _Entering admin credentials_
 
@@ -87,12 +77,6 @@ After a short delay, Power BI will connect to the database and import a dataset 
 ## Exercise 2: Build a report in Power BI ##
 
 Visualizations (or simply "visuals") are the primary element that make up Power BI reports. In this exercise, you will use the Power BI report designer to create visuals from the database you connected to in the previous exercise, adjust filters and aggregates to refine the way the data is displayed, and format the visuals to produce compelling output.
-
-1. Click **streaminglab-database** under **My Workspace** > **Datasets** in the panel on the left. This is the dataset that was imported when you connected to the database in the previous exercise.
-
-	![Opening the dataset](Images/open-dataset.png)
-
-	_Opening the dataset_
 
 1. Click the **Map** icon in the "Visualizations" panel to add a map visual to the report.
 	
@@ -190,7 +174,7 @@ Visualizations (or simply "visuals") are the primary element that make up Power 
 
 1. Select the table visual and use the formatting controls in the "Visualizations" panel to make the following changes:
 
-	- Under "Table style," change the style to "Alternating rows"
+	- Under "Style," change the table style to "Alternating rows"
 	- Turn "Title" on, and change the title text to "Camera activity" 
 
 	Confirm that the resulting table looks like this:
@@ -202,12 +186,12 @@ Visualizations (or simply "visuals") are the primary element that make up Power 
 1. Select the slicer visual and use the formatting controls in the "Visualizations" panel to make the following changes:
 
 	- Under "Selection Controls," set "Single Select" to off
-	- Turn "Header" off
+	- Turn "Visual Header" off
 	- Turn "Title" on and set the title text to "Show sightings that are:"
 
 1. Double-click **Page 1** in the bottom-left corner of the designer and change the report title to "Polar Bear Activity."
 
-1. Save the report by clicking **Save** in the upper-right corner of the page. Enter a report name such as "Polar Bear Activity."
+1. Use the **File -> Save** command to save the report.
 
 The formatted report should resemble the one below. Feel free to embellish it further. You could, for example, add a title in a large font at the top of the report. Once you're satisfied with the layout and content, it's time to put it to work using a live data source.
 
@@ -220,7 +204,7 @@ _The formatted report_
 
 Now that the report is prepared in Power BI, your final task is to run the end-to-end solution that you built in this series of hands-on labs and check for polar bears!
 
-1. Open the database that you created in [Part 3](../3%20-%20Predict) in the [Azure Portal](https://portal.azure.com) and use the query editor to execute the following query and delete all rows from the "PolarBears" table:
+1. Open the database that you created in [Part 3](../3%20-%20Predict) in the [Azure Portal](https://portal.azure.com?WT.mc_id=academiccontent-github-cxa) and use the query editor to execute the following query and delete all rows from the "PolarBears" table:
 
 	```sql
 	DELETE FROM dbo.PolarBears
@@ -228,17 +212,13 @@ Now that the report is prepared in Power BI, your final task is to run the end-t
 
 1. Open the Stream Analytics job that you created in [Part 2](../2%20-%20Process) in the Azure Portal and start the job running.
 
-1. Wait until the job is running. Then open a Command Prompt or terminal window and ```cd``` to the project directory you created in [Part 1](../1%20-%20Ingest). Use the following command to start the virtual cameras running:
+1. Wait until the Stream Analytics job is running. Then open a Command Prompt or terminal window and ```cd``` to the project directory you created in [Part 1](../1%20-%20Ingest). Use the following command to start the virtual cameras running:
 
 	```
 	node run.js
 	```
 
-1. Return to the Power BI report in the Power BI service portal and click **Refresh** at the top of the page. Then refresh it again every 15 seconds or so. The report will refresh automatically every 15 minutes, but you can refresh it manually as often as you would like to update the visuals. 
-
-	![Refreshing the report](Images/refresh-report.png)
-
-	_Refreshing the report_
+1. Return to Power BI Desktop and click **Refresh** in the ribbon at the top of the window. Click it again every 15 seconds or so. The report will refresh automatically every 15 minutes or so, but you can refresh it manually as often as you would like to update the visuals. 
 
 1. Confirm that red and green bubbles appear at various locations around the island. Red bubbles indicate the presence of polar bears, while green bubbles represent locations where photos were taken but no polar bears were detected. Locations that have a mixture of sightings will show red *and* green, as pictured below.
 
@@ -252,12 +232,12 @@ Now that the report is prepared in Power BI, your final task is to run the end-t
 
 1. When you're satisfied that the solution is working as intended, stop the cameras and stop the Stream Analytics job.
 
-You now have a report that shows, in near real-time, polar-bear activity on the island. If you have a [Power BI Pro or Power BI Premium](https://powerbi.microsoft.com/blog/power-bi-pro-power-bi-premium-flexibility-to-choose-the-licensing-best-for-you-and-your-organization/) account, you can share the report with other Power BI users so they, too, can monitor polar-bear activity. For more information about sharing your work, see [Share Power BI Dashboards and Reports](https://docs.microsoft.com/en-us/power-bi/service-how-to-collaborate-distribute-dashboards-reports "Share Power BI Dashboards and Reports"). Reports can also be viewed in the [Power BI mobile apps](https://docs.microsoft.com/power-bi/mobile-apps-for-mobile-devices) so you can keep track of polar bears on your Windows, Android, or iOS device — even on an Apple watch!
+You now have a report that shows, in near real-time, polar-bear activity on the island. If you have a [Power BI Pro or Power BI Premium](https://powerbi.microsoft.com/blog/power-bi-pro-power-bi-premium-flexibility-to-choose-the-licensing-best-for-you-and-your-organization/?WT.mc_id=academiccontent-github-cxa) account, you can share the report with other Power BI users so they, too, can monitor polar-bear activity. For more information about sharing your work, see [Share Power BI Dashboards and Reports](https://docs.microsoft.com/power-bi/service-how-to-collaborate-distribute-dashboards-reports?WT.mc_id=academiccontent-github-cxa "Share Power BI Dashboards and Reports"). Reports can also be viewed in the [Power BI mobile apps](https://docs.microsoft.com/power-bi/mobile-apps-for-mobile-devices?WT.mc_id=academiccontent-github-cxa) so you can keep track of polar bears on your Windows, Android, or iOS device — even on an Apple watch!
 
 <a name="Summary"></a>
 ## Summary ##
 
-In a series of four hands-on labs, you built a solution that feeds data from a simulated array of cameras into an [Azure IoT hub](https://azure.microsoft.com/services/iot-hub/), uploads photographs to [Azure Storage](https://azure.microsoft.com/services/storage/?v=16.50), processes the data using [Azure Stream Analytics](https://azure.microsoft.com/services/stream-analytics/), analyzes the photographs using the [Custom Vision Service](https://azure.microsoft.com/services/cognitive-services/custom-vision-service/), and visualizes the output using [Microsoft Power BI](https://powerbi.microsoft.com/). You also got first-hand experience using [Azure Functions](https://azure.microsoft.com/services/functions/) and [Azure SQL Database](https://azure.microsoft.com/services/sql-database/). It's a sophisticated solution, and one that has applications in the real world.
+In a series of four hands-on labs, you built a solution that feeds data from a simulated array of cameras into an [Azure IoT hub](https://azure.microsoft.com/services/iot-hub/?WT.mc_id=academiccontent-github-cxa), uploads photographs to [Azure Storage](https://azure.microsoft.com/services/storage/?WT.mc_id=academiccontent-github-cxa), processes the data using [Azure Stream Analytics](https://azure.microsoft.com/services/stream-analytics/?WT.mc_id=academiccontent-github-cxa), analyzes the photographs using the [Custom Vision Service](https://azure.microsoft.com/services/cognitive-services/custom-vision-service/?WT.mc_id=academiccontent-github-cxa), and visualizes the output using [Microsoft Power BI](https://powerbi.microsoft.com/?WT.mc_id=academiccontent-github-cxa). You also got first-hand experience using [Azure Functions](https://azure.microsoft.com/services/functions/?WT.mc_id=academiccontent-github-cxa) and [Azure SQL Database](https://azure.microsoft.com/services/sql-database/?WT.mc_id=academiccontent-github-cxa). It's a sophisticated solution, and one that has applications in the real world.
 
 Once you're finished using the solution, you should delete all the Azure services you deployed so they no longer charge to your subscription. To delete them, simply go to the Azure Portal and delete the "streaminglab-rg" resource group. That's one of the many benefits of using resource groups: one simple action deletes the resource group and everything inside it. Once deleted, a resource group cannot be recovered, so make sure you're finished with it before deleting it.
 
